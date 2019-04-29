@@ -21,12 +21,12 @@ int main(){
         printf("=");
         usleep(5000);
     }
-    printf("\n\n\n\n");
-    usleep(50000);
+    usleep(600000);
+    printf("\n\nMain Menu\n\n");
     int menuopt;
     printf("Enter (1) to encrypt via rotation cipher\n\nEnter (2) to decrypt a rotation cipher with a known key\n\nEnter (3) to decrypt a rotation cipher without the key\n\nEnter (4) to encrypt using a substitution cipher\n\nEnter (5) to decrypt a substitution cipher with the key\n\nEnter (6) to decrypt a substitution cipher without the key\n\n");
     scanf("%d", &menuopt);//gets user selected option, stores in menuopt
-    switch(menuopt){//begins subprogram related to input
+    switch(menuopt){//begins subprograms depending on input
         case 1 :
             encRot();
             break;
@@ -72,8 +72,11 @@ void encRot(){
 	}
 
 	printf("Encrypted message: %s", userInp);
-
-	return 0;
+	printf("\n\nPress (Enter) to return to the main menu");
+	getchar();
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
 void decRotKey(){
     system("@cls||clear");
@@ -99,6 +102,12 @@ void decRotKey(){
 	}
 
 	printf("Decrypted userInp: %s", userInp);
+	printf("\n\nPress (Enter) to return to the main menu");
+	getchar();
+	char cha;
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
 void decRotNo(){
     system("@cls||clear");
@@ -142,8 +151,13 @@ void decRotNo(){
                 userInp[i] = chr;
             }
         }
-        printf("\nDecrypted guess %d: %s", key, userInp);
+        printf("\nDecrypted guess with %d shifts: %s", key, userInp);
     }
+    printf("\n\nPress (Enter) to return to the main menu");
+	char cha;
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
 void encSub(){
     system("@cls||clear");
@@ -153,7 +167,7 @@ void encSub(){
     getchar();
     fgets(userInp, 999999, stdin);
     strupr(userInp);
-    printf("\nWhat key would you like to use?");
+    printf("\nWhat key would you like to use? (1 or 2)");
     scanf("%d", &key);
     printf("\nye key is %d", key);
     if(key = 1){
@@ -179,6 +193,12 @@ void encSub(){
         printf("\nEncripted userInp: \n%s", userInp);
     }
     printf("\n\nEncryption finished.\n");
+    printf("\n\nPress (Enter) to return to the main menu");
+	getchar();
+	char cha;
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
 void decSub(){
     system("@cls||clear");
@@ -188,7 +208,7 @@ void decSub(){
     getchar();
     fgets(userDec, 999999, stdin);
     strupr(userDec);
-    printf("\nWhat is the key?\n");
+    printf("\nWhat is the key? (1 or 2)\n");
     scanf("%d", &key);
     if(key = 1){
         char sub1[26] = "KXVMCNOPHQRSYZOJADLEGWBUFT";//this is the alphabetically ordered opposite of the original sub[]
@@ -213,10 +233,16 @@ void decSub(){
         printf("\nEncripted message: \n%s", userDec);
     }
     printf("\n\nFinished.\n");
+    printf("\n\nPress (Enter) to return to the main menu");
+    getchar();
+	char cha;
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
 void dec(){
     system("@cls||clear");
-    printf("\nPlease enter the message you would like to have decripted.\n Be warned that the message must be of a significant length in order to achieve an accurate result.\nThere is hwoever a maximum length of 999999 characters.\n");
+    printf("\nPlease enter the message you would like to have decripted.\n Be warned that the message must be of a significant length in order to achieve an accurate result.\nThere is however a maximum length of 999999 characters and there must be no paragraphs (ie, no (enter)'s used).\n");
     char userInp[999999], alph[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", natOrd[26]="ETAOINSRHLDCUMFPGWYBVKXJQZ", t, t2;
     int i = 0, count[26] = {0}, x, n, c, d, ch;//amount of variables due to strange compiler issues, it could be more efficient but not without unexplainable compiler errors
     getchar();
@@ -252,14 +278,17 @@ void dec(){
             d--;
         }
     }
-        for(i = 0; userInp[i] != '\0'; ++i){//functionally the same as what is seen in encSub() except using the newly made alph()
-            ch = (int)userInp[i];
-            printf("\nch: %d   i: %d", ch, i);
-            if(ch>64 && ch<91){
-                ch = ch-65;
-                userInp[i] = alph[ch];
-            }
+    for(i = 0; userInp[i] != '\0'; ++i){//functionally the same as what is seen in encSub() except using the newly made alph()
+        ch = (int)userInp[i];
+        if(ch>64 && ch<91){
+            ch = ch-65;
+            userInp[i] = alph[ch];
         }
-        printf("\nDecripted message guess: %s", userInp);
-        getchar();
+    }
+    printf("\nDecripted message guess: %s", userInp);
+    printf("\n\nPress (Enter) to return to the main menu");
+	char cha;
+	scanf("%c", &cha);
+	system("@cls||clear");
+	main();
 }
