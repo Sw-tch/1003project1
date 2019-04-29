@@ -211,7 +211,7 @@ void decSub(){
     printf("\nWhat is the key? (1 or 2)\n");
     scanf("%d", &key);
     if(key = 1){
-        char sub1[26] = "KXVMCNOPHQRSYZOJADLEGWBUFT";//this is the alphabetically ordered opposite of the original sub[]
+        char sub1[26] = "KXVMCNOPHQRSZYOJADLEGWBUFT";//this is the alphabetically ordered opposite of the original sub[]
         for(i = 0; userDec[i] != '\0'; ++i){//functionally the same as the original sub, except it is subbing in a new sub[]
             ch = (int)userDec[i];
             if(ch>64 && ch<91){
