@@ -2,30 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 int main(){
-    int i;/*
-    printf("\n\n\n\n             ::::::::  :::::::::  :::   ::: ::::::::: ::::::::::: ::::::::  ::::::::: \n");
+    int i;
+    printf("\n\n\n\n       ::::::::  :::::::::  :::   ::: ::::::::: ::::::::::: ::::::::  ::::::::: \n");
     usleep(300000);
-    printf("           :+:    :+: :+:    :+: :+:   :+: :+:    :+:    :+:    :+:    :+: :+:    :+: \n");
+    printf("     :+:    :+: :+:    :+: :+:   :+: :+:    :+:    :+:    :+:    :+: :+:    :+: \n");
     usleep(300000);
-    printf("          +:+        +:+    +:+  +:+ +:+  +:+    +:+    +:+    +:+    +:+ +:+    +:+  \n");
+    printf("    +:+        +:+    +:+  +:+ +:+  +:+    +:+    +:+    +:+    +:+ +:+    +:+  \n");
     usleep(300000);
-    printf("         +#+        +#++:++#:    +#++:   +#++:++#+     +#+    +#+    +:+ +#++:++#:    \n");
+    printf("   +#+        +#++:++#:    +#++:   +#++:++#+     +#+    +#+    +:+ +#++:++#:    \n");
     usleep(300000);
-    printf("        +#+        +#+    +#+    +#+    +#+           +#+    +#+    +#+ +#+    +#+    \n");
+    printf("  +#+        +#+    +#+    +#+    +#+           +#+    +#+    +#+ +#+    +#+    \n");
     usleep(300000);
-    printf("       #+#    #+# #+#    #+#    #+#    #+#           #+#    #+#    #+# #+#    #+#     \n");
+    printf(" #+#    #+# #+#    #+#    #+#    #+#           #+#    #+#    #+# #+#    #+#     \n");
     usleep(300000);
-    printf("       ########  ###    ###    ###    ###           ###     ########  ###    ###      \n");
+    printf(" ########  ###    ###    ###    ###           ###     ########  ###    ###      \n");
     usleep(300000);
-    printf("      ");
     for(i=0; i<74; ++i){
         printf("=");
         usleep(5000);
     }
     printf("\n\n\n\n");
-    usleep(50000);*/
+    usleep(50000);
     int menuopt;
-    printf("     Enter (1) to encrypt via rotation cipher\n\n     Enter (2) to decrypt a rotation cipher with a known key\n\n     Enter (3) to decrypt a rotation cipher without the key\n\n     Enter (4) to encrypt using a substitution cipher\n\n     Enter (5) to decrypt a substitution cipher with the key\n\n     Enter (6) to decrypt a substitution cipher without the key\n\n");
+    printf("Enter (1) to encrypt via rotation cipher\n\nEnter (2) to decrypt a rotation cipher with a known key\n\nEnter (3) to decrypt a rotation cipher without the key\n\nEnter (4) to encrypt using a substitution cipher\n\nEnter (5) to decrypt a substitution cipher with the key\n\nEnter (6) to decrypt a substitution cipher without the key\n\n");
     scanf("%d", &menuopt);//gets user selected option, stores in menuopt
     switch(menuopt){//begins subprogram related to input
         case 1 :
@@ -80,7 +79,6 @@ void decRotKey(){
     system("@cls||clear");
     char userInp[999999], chr;
 	int i, key;
-
 	printf("Enter a message to decript: ");
 	getchar();
 	fgets(userInp, 999999, stdin);
@@ -104,35 +102,47 @@ void decRotKey(){
 }
 void decRotNo(){
     system("@cls||clear");
-    int selection;
-    printf("\nEnter 1 to force a solution (will guess all possible solutions)\nOr enter 2 for an educated solution (will guess a solution based on statistical analysis)\n");
-    scanf("%d", &selection);
-    switch(selection){
-        case 1 :;
-            char userInp[999999], temp[100], chr;
-            int i, key=-25;
-            printf("Enter a message to decrypt: ");
-                getchar();
-                fgets(userInp, 999999, stdin);
-                strupr(userInp);
-                strncpy(temp, userInp, 100);
-            for(key = 0; key < 27; ++key){//tests all possible keys
-                for(i = 0; userInp[i] != '\0'; ++i){
-                    chr = userInp[i];
-                    if(chr >= 'A' && chr <= 'Z'){
-                        chr = chr - key;
+    int selection, i, key, count[26] = {0}, x, n, c, d, ch;
+    char userInp[999999], alph[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", t, t2, shifts, chr;
+    printf("Enter a message to decrypt: ");
+    getchar();
+    fgets(userInp, 999999, stdin);
+    strupr(userInp);
+    while (userInp[i] != '\0') {//counts frequency of characters within the input, in alphabetical order
+        if (userInp[i] >= 'A' && userInp[i] <= 'Z') {
+            x = userInp[i] - 'A';
+            count[x]++;
+        }
+        i++;
+    }
+    for(d=0; d < 26; ++d){//sorts the alphabet (alph) in order of most occuring to least occuring, via using count[] to sort and alph[] values shifted in coordination with it
+        while ( d > 0 && count[d-1] < count[d]) {
+            t = count[d];
+            t2 = alph[d];
+            count[d] = count[d-1];
+            alph[d] = alph[d-1];
+            count[d-1] = t;
+            alph[d-1] = t2;
+            d--;
+        }
+    }
 
-                        if(chr < 'A'){
-                            chr = chr + 'Z' - 'A' + 1;
-                        }
-
-                        userInp[i] = chr;
-                    }
+    for(x = 0; x < 26; ++x){//increments through the array of most likely characters to be E
+        key = (int)alph[x] - 'E';
+        if(key<0){
+            key = key + 26;
+        }
+        for(i = 0; userInp[i] != '\0'; ++i){
+            chr = userInp[i];
+            if(chr >= 'A' && chr <= 'Z'){
+                chr = chr - key;
+                if(chr < 'A'){
+                    chr = chr + 'Z' - 'A' + 1;
                 }
-                printf("\nDecrypted guess %d: %s", key, userInp);
-                strncpy(userInp, temp, 100);
+                userInp[i] = chr;
             }
-            break;
+        }
+        printf("\nDecrypted guess %d: %s", key, userInp);
     }
 }
 void encSub(){
