@@ -7,7 +7,10 @@
 #+#    #+# #+#    #+#    #+#    #+#           #+#    #+#    #+# #+#    #+#     
 ########  ###    ###    ###    ###           ###     ########  ###    ###      
 
-This program can encrypt and decrypt text via rotation (also known as caesar) and substitution cypher and decyphering. 
+This program can encrypt and decrypt text via rotation (also known as caesar) and substitution cypher and decyphering.
+
+It is reccomended you use the exe included and don't try to compile the source code yourself. 
+Furthermore, this is for WINDOWS ONLY as some functions are not portable to other operating systems. 
 
 It has no error checking and therefore requires perfect input to avoid errors. Please be careful and read prompt before committing to inputs. 
 
